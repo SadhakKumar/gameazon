@@ -19,6 +19,7 @@ export default function LoginPage() {
     const onLogin = async () => {
         try {
             setLoading(true);
+            console.log(user);
             // const response = await axios.post("/api/users/login", user);
             const response = await fetch("http://localhost:3000/api/users/login", {
                 method: "POST",
@@ -28,7 +29,7 @@ export default function LoginPage() {
             // console.log("Login success", response.data);
 
 
-            router.push("/profile");
+            router.push("/homepage");
 
 
         } catch (error) {
@@ -48,33 +49,48 @@ export default function LoginPage() {
     }, [user]);
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen py-2">
-            <h1>{loading ? "Processing" : "Login"}</h1>
-            <hr />
-
-            <label htmlFor="email">email</label>
-            <input
-                className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-                id="email"
-                type="text"
-                value={user.email}
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
-                placeholder="email"
-            />
-            <label htmlFor="password">password</label>
-            <input
-                className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-                id="password"
-                type="password"
-                value={user.password}
-                onChange={(e) => setUser({ ...user, password: e.target.value })}
-                placeholder="password"
-            />
-            <button
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+          <div className="bg-white p-8 shadow-lg rounded-lg w-96">
+            <h1 className="text-2xl font-bold mb-4 text-center">Login</h1>
+            
+              <div className="mb-4">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-600">
+                  Email
+                </label>
+                <input
+                  className="w-full p-2 border rounded-lg focus:ring focus:outline-none"
+                  id="email"
+                  type="text"
+                  value={user.email}
+                  onChange={(e) => setUser({ ...user, email: e.target.value })}
+                  placeholder="Email"
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-600">
+                  Password
+                </label>
+                <input
+                  className="w-full p-2 border rounded-lg focus:ring focus:outline-none"
+                  id="password"
+                  type="password"
+                  value={user.password}
+                  onChange={(e) => setUser({ ...user, password: e.target.value })}
+                  placeholder="Password"
+                />
+              </div>
+              <button
                 onClick={onLogin}
-                className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600">Login here</button>
-            <Link href="/signup">Visit Signup page</Link>
+                className="w-full p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 focus:outline-none">
+                {loading ? 'Processing' : 'Login'}
+              </button>
+            
+            <div className="text-center mt-4">
+              <Link href="/signup">
+                Visit Signup page
+              </Link>
+            </div>
+          </div>
         </div>
-    )
-
+      );
 }
